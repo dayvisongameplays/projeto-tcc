@@ -1,0 +1,10 @@
+# You can specialize this file for each language.
+# For example, for French create a messages.fr file
+#
+
+atividade.nome = "Nome da atividade"
+atividade.descricao = "Descrição"
+atividade.hrInicio = "Hora de Início"
+atividade.hrFim = "Hora de Fim"
+validation.required= O campo %s deve ser preenchido
+
