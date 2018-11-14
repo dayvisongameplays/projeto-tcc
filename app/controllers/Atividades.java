@@ -50,6 +50,11 @@ public class Atividades extends Controller{
 		render(atividades);
 	}
 	
+	public static void listarJson(){
+		List<Atividade> atividades = Atividade.findAll();
+		renderJSON(atividades);
+	}
+	
 	public static void listarBase() {
 		List<Atividade> atividades = Atividade.findAll();
 		render(atividades);

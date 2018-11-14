@@ -35,7 +35,7 @@
 </head>
 <body>
 
-<body class="page-header-fixed page-quick-sidebar-over-content " onload="myFunction()">
+<body class="page-header-fixed page-quick-sidebar-over-content ">
 <!-- BEGIN HEADER -->
 <div class="page-header -i navbar navbar-fixed-top">
 	<!-- BEGIN HEADER INNER -->
@@ -166,13 +166,8 @@
 					<span class="title">Atividades Geral</span>
 					<span class="arrow "></span>
 					</a>
-					<ul class="sub-menu" id="teste">
-						#{list items:atividades, as: 'atv'}
-							<li><a href="@{Atividades.detalhes(atv.id)}">${atv.nome}</a></li>
-						#{/list} 
-						#{else}
-							<li><a href="#">Não há atividades cadastradas</a></li>
-						#{/else}
+					<ul class="sub-menu" id="sub-menu-atividades">
+						<li><a href="#">Não há atividades cadastradas</a></li>
 					</ul>
 				</li>
 				<li>
@@ -396,20 +391,27 @@
 		<script src="@{'/public/stylesheets/css1/assets/admin/pages/scripts/table-advanced.js'}"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
 		
-		<!-- TESTE/OnLoad funcionando -->
 		<script>
-		function myFunction() {
-    		document.getElementById("teste").innerHTML = "#{list items:atividades, as: 'atv'}<li><a href='@{Atividades.detalhes(atv.id)}'>${atv.nome}</a></li>#{/list} #{else}<li><a href='#'>Não há atividades cadastradas</a></li>#{/else}";
-		}
-		</script>
-		
-		<script>
-			jQuery(document).ready(function() {     
-			Metronic.init(); // init metronic core components
-			Layout.init(); // init current layout
-			QuickSidebar.init(); // init quick sidebar
-			Demo.init(); // init demo features
-			TableAdvanced.init();
+			jQuery(document).ready(function() {
+				$.ajax({
+					url:"@{Atividades.listarJson}",
+					success:function(data){
+						if(data.length >= 0){
+							$("#sub-menu-atividades").html("");
+							for (x in data) {
+								$("#sub-menu-atividades").append('<li><a href="/atividades/detalhes?id=' + data[x].id + '"}>' + data[x].nome + '</a></li>');
+							    console.log(x);
+							}
+						}
+						
+					}
+				});
+				Metronic.init(); // init metronic core components
+				Layout.init(); // init current layout
+				QuickSidebar.init(); // init quick sidebar
+				Demo.init(); // init demo features
+				TableAdvanced.init();
+			
 			});
 		</script>
  		#{get 'moreScripts' /}
