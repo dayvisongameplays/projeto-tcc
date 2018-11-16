@@ -13,53 +13,64 @@ import com.mysql.fabric.xmlrpc.base.Array;
 
 import QRCode.CreateQR;
 import models.Atividade;
+import models.Solicitacao;
+import models.Usuario;
 import play.db.jpa.Blob;
 import play.mvc.Controller;
 import play.mvc.With;
 
 @With(Secure.class)
-public class Atividades extends Controller{
-	
+public class Atividades extends Controller {
+
 	public static void formAtividade() {
 		render();
 	}
-	
+
 	public static void academia() {
 		render();
 	}
-	
+
 	public static void salvar(@play.data.validation.Valid Atividade atividade) {
-		if(validation.hasErrors()) {
+		if (validation.hasErrors()) {
 			validation.keep();
 			params.flash();
 			formAtividade();
 		}
-	
+
 		boolean novaAtividade = atividade.id == null;
 		atividade.save();
-		if(novaAtividade) {
-			String conteudoQRCode = "atividadeID="+atividade.id;
+		if (novaAtividade) {
+			String conteudoQRCode = "atividadeID=" + atividade.id;
 			atividade.qrCode = CreateQR.generateQrCodeBlob(conteudoQRCode);
 			atividade.save();
 		}
 		detalhes(atividade.id);
 	}
-	
+
+	public static void solicitarCadastro(Long idAtividade, Long idUsuario) {
+		Solicitacao solicitacao = new Solicitacao();
+		solicitacao.atividade = Atividade.findById(idAtividade);
+		solicitacao.usuario = Usuario.findById(idUsuario);
+		solicitacao.save();
+		flash.success("Solicitação enviada com sucesso!");
+		listarUsuario();
+	}
+
 	public static void listar() {
 		List<Atividade> atividades = Atividade.findAll();
 		render(atividades);
 	}
-	
-	public static void listarJson(){
-		List<Atividade> atividades = Atividade.findAll();
-		renderJSON(atividades);
-	}
-	
-	public static void listarBase() {
+
+	public static void listarUsuario() {
 		List<Atividade> atividades = Atividade.findAll();
 		render(atividades);
 	}
-	
+
+	public static void listarJson() {
+		List<Atividade> atividades = Atividade.findAll();
+		renderJSON(atividades);
+	}
+
 	public static void deletar(Long id) {
 		Atividade atividade = Atividade.findById(id);
 		atividade.delete();
@@ -70,24 +81,31 @@ public class Atividades extends Controller{
 		Atividade atividade = Atividade.findById(id);
 		renderTemplate("Atividades/formAtividade.html", atividade);
 	}
-	
+
 	public static void detalhes(Long id) {
 		Atividade atividade = Atividade.findById(id);
 		render(atividade);
 	}
-	
-	public  static  void qrCodeAtividade(Long  id) {
-	    Atividade atividade = Atividade.findById(id);
-	    notFoundIfNull(atividade);
-	    response.setContentTypeIfNotSet(atividade.qrCode.type());
-	    renderBinary(atividade.qrCode.get());
+
+	public static void qrCodeAtividade(Long id) {
+		Atividade atividade = Atividade.findById(id);
+		notFoundIfNull(atividade);
+		response.setContentTypeIfNotSet(atividade.qrCode.type());
+		renderBinary(atividade.qrCode.get());
 	}
-	
+
 	public static void gerarQRCodeAtividade(Long id) {
 		Atividade atividade = Atividade.findById(id);
-		String conteudoQRCode = "atividadeID="+atividade.id;
+		String conteudoQRCode = "atividadeID=" + atividade.id;
 		atividade.qrCode = CreateQR.generateQrCodeBlob(conteudoQRCode);
 		atividade.save();
 		renderTemplate("Atividades/detalhes.html", atividade);
+	}
+
+	public static void cadastrarUsuariuo(Long id) {
+		Solicitacao solicitacao = Solicitacao.findById(id);
+		solicitacao.atividade.usuarios.add(solicitacao.usuario);
+		flash.success("O usuário foi cadastrado com sucesso na atividade "+solicitacao.atividade.nome+".");
+		Solicitacoes.listar();
 	}
 }

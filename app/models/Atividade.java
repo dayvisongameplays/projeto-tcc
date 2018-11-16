@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -27,4 +29,10 @@ public class Atividade extends Model{
 	
 	@OneToMany(mappedBy="atividade")
 	public List<Frequencia> frequencias;
+	
+	@ManyToMany(mappedBy="atividades")
+	public List<Usuario> usuarios;
+	
+	@OneToMany(mappedBy="atividade")
+	public List<Solicitacao> solicitacoes;
 }

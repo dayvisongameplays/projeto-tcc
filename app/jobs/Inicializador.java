@@ -14,14 +14,9 @@ public class Inicializador extends Job {
 		if(Administrador.count() == 0) {
 			
 			Administrador adm1 = new Administrador();
-			adm1.email = "dayvisonmsilva@hotmail.com";
-			adm1.senha = "123";
+			adm1.matricula = "admin";
+			adm1.senha = "admin";
 			adm1.save();
-			
-			Administrador adm2 = new Administrador();
-			adm2.email = "alef@gmail.com";
-			adm2.senha = "123";
-			adm2.save();
 		}
 	}
 }
