@@ -47,15 +47,6 @@ public class Atividades extends Controller {
 		detalhes(atividade.id);
 	}
 
-	public static void solicitarCadastro(Long idAtividade, Long idUsuario) {
-		Solicitacao solicitacao = new Solicitacao();
-		solicitacao.atividade = Atividade.findById(idAtividade);
-		solicitacao.usuario = Usuario.findById(idUsuario);
-		solicitacao.save();
-		flash.success("Solicitação enviada com sucesso!");
-		listarUsuario();
-	}
-
 	public static void listar() {
 		List<Atividade> atividades = Atividade.findAll();
 		render(atividades);
@@ -100,12 +91,5 @@ public class Atividades extends Controller {
 		atividade.qrCode = CreateQR.generateQrCodeBlob(conteudoQRCode);
 		atividade.save();
 		renderTemplate("Atividades/detalhes.html", atividade);
-	}
-
-	public static void cadastrarUsuariuo(Long id) {
-		Solicitacao solicitacao = Solicitacao.findById(id);
-		solicitacao.atividade.usuarios.add(solicitacao.usuario);
-		flash.success("O usuário foi cadastrado com sucesso na atividade "+solicitacao.atividade.nome+".");
-		Solicitacoes.listar();
 	}
 }

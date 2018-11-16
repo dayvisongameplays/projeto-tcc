@@ -206,14 +206,14 @@
 				</li>	
 				<li>
 					<a href="javascript:;">
-					<i class="icon-puzzle"></i>
+					<i class="fa fa-paper-plane-o"></i>
 					<span class="title">Solicitações</span>
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
 						<li>
 							<a href="@{Solicitacoes.listar()}">
-							Solicitações</a>
+							Lista de Solicitações</a>
 						</li>
 					</ul>
 				</li>
@@ -409,7 +409,7 @@
 				$.ajax({
 					url:"@{Atividades.listarJson}",
 					success:function(data){
-						if(data.length >= 0){
+						if(data.length > 0){
 							$("#sub-menu-atividades").html("");
 							for (x in data) {
 								$("#sub-menu-atividades").append('<li><a href="/atividades/detalhes?id=' + data[x].id + '"}>' + data[x].nome + '</a></li>');

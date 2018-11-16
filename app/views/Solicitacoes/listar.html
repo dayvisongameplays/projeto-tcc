@@ -38,11 +38,16 @@
 						</tr>
 					</thead>
 					<tbody>
-						#{list items:solicitacaos, as: 'slc'}
+						#{list items:solicitacoes, as: 'slc'}
 						<tr>
 							<td>${slc.atividade.nome}</td>
 							<td>${slc.usuario.nome}</td>
-							<td><a href="@{Atividades.cadastrarUsuariuo(slc.id)}">Confirmar Solicitação</a></td>
+							#{if slc.confirmado == false}
+								<td><a href="@{Solicitacoes.cadastrarUsuariuo(slc.id)}" class="btn btn-success">Confirmar Solicitação</a></td>
+							#{/if}
+							#{else}
+								<td><a href="#" class="btn btn-danger">Confirmado</a></td>
+							#{/else}
 						#{/list}
 						</tr>
 					</tbody>

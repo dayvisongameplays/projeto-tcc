@@ -43,7 +43,7 @@
 						<tr>
 							<td>${atv.nome}</td>
 							<td>${atv.descricao}</td>
-							<td> <a	href="@{Atividades.solicitarCadastro(atv.id,session.get('idUsuario'))}">
+							<td> <a	href="@{Solicitacoes.solicitarCadastro(atv.id,session.get('idUsuario'))}">
 							Cadastrar-se</a></td> 
 						#{/list}
 						</tr>

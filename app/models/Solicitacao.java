@@ -12,8 +12,7 @@ import play.db.jpa.Model;
 @Entity
 public class Solicitacao extends Model{
 	
-	public String idAtividade;
-	public String idUsuario;
+	public boolean confirmado = false;
 	
 	@ManyToOne
 	@JoinColumn(name="usuario_id")
