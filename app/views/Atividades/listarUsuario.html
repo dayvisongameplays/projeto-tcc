@@ -43,8 +43,9 @@
 						<tr>
 							<td>${atv.nome}</td>
 							<td>${atv.descricao}</td>
-							<td> <a	href="@{Solicitacoes.solicitarCadastro(atv.id,session.get('idUsuario'))}">
-							Cadastrar-se</a></td> 
+								<td> <a href="@{Solicitacoes.solicitarCadastro(atv.id,session.get('idUsuario'))}" 
+								type="button" class="btn btn-circle btn-primary"><font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">Cadastrar-se</font></font></a></td>
 						#{/list}
 						</tr>
 					</tbody>

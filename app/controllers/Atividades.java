@@ -2,6 +2,7 @@ package controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -13,6 +14,7 @@ import com.mysql.fabric.xmlrpc.base.Array;
 
 import QRCode.CreateQR;
 import models.Atividade;
+import models.Frequencia;
 import models.Solicitacao;
 import models.Usuario;
 import play.db.jpa.Blob;

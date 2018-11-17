@@ -43,10 +43,16 @@
 							<td>${slc.atividade.nome}</td>
 							<td>${slc.usuario.nome}</td>
 							#{if slc.confirmado == false}
-								<td><a href="@{Solicitacoes.cadastrarUsuariuo(slc.id)}" class="btn btn-success">Confirmar Solicitação</a></td>
+								<td> <a href="@{Solicitacoes.cadastrarUsuariuo(slc.id)}" 
+								type="button" class="btn btn-circle btn-success"><i class="fa fa-plus"></i>
+								<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">Confirmar Solicitação</font></font></a></td>
 							#{/if}
 							#{else}
-								<td><a href="#" class="btn btn-danger">Confirmado</a></td>
+								<td> <a href="#" 
+								type="button" class="btn btn-circle btn-danger"><i class="fa fa-times"></i>
+								<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">Confirmado</font></font></a></td>
 							#{/else}
 						#{/list}
 						</tr>
