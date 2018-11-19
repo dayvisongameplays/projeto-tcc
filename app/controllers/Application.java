@@ -11,11 +11,20 @@ import models.*;
 public class Application extends Controller {
 
     public static void index() {
-        render();
+    	if(session.get("matriculaAdmin") == null){
+    		indexUsuario();
+    	}else{
+    		 render();
+    	}
+       
     }
     
     public static void indexUsuario() {
-        render();
+    	if(session.get("usuarioEmail") == null){
+    		index();
+    	}else{
+    		 render();
+    	}
     }
     
     

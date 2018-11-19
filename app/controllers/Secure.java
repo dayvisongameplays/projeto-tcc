@@ -7,12 +7,13 @@ public class Secure extends Controller {
 
 	@Before
 	static void checkAutenticated() {
-		if (session.get("usuarioEmail") == null) {
-			if(session.get("matriculaAdmin") == null){
+		if (session.get("matriculaAdmin") == null) {
+			if (session.get("usuarioEmail") == null) {
 				Logins.login();
 			}
 		} else {
 			// System.out.println("Logado");
 		}
 	}
+	
 }
