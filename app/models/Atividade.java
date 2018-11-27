@@ -37,7 +37,4 @@ public class Atividade extends Model{
 	@OneToMany(mappedBy="atividade")
 	public List<Solicitacao> solicitacoes;
 	
-	public Atividade() {
-		this.usuarios = new ArrayList<Usuario>();
-	}
 }

@@ -189,6 +189,12 @@ public class Frequencias extends Controller {
 		render(frequencias);
 	}
 	
+	public static void listarFreqUsuario(Long id) {
+		Usuario usuario = Usuario.findById(id);
+		List<Frequencia> frequencias = Frequencia.find("usuario = ?", usuario).fetch();
+		render(frequencias);
+	}
+	
 	//mod dia 13/10/2018
 	public static Date pegarData() throws ParseException {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");

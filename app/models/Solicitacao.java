@@ -13,6 +13,7 @@ import play.db.jpa.Model;
 public class Solicitacao extends Model{
 	
 	public boolean confirmado = false;
+	public boolean enviado = false;
 	
 	@ManyToOne
 	@JoinColumn(name="usuario_id")

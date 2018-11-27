@@ -167,7 +167,7 @@
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu" id="sub-menu-atividades">
-						<li><a href="#">Não há atividades cadastradas</a></li>
+						<li><a href="#">Não há Atividades Cadastradas</a></li>
 					</ul>
 				</li>
 				<li>
@@ -178,12 +178,8 @@
 					</a>
 					<ul class="sub-menu">
 						<li>
-							<a href="#">
-							Cadastrar Frequência</a>
-						</li>
-						<li>
-							<a href="#">
-							Listar Frequências</a>
+							<a href="@{Frequencias.listarFreqUsuario(session.get('idUsuario'))}">
+							Minhas Frequências</a>
 						</li>
 					</ul>
 				</li>
@@ -196,8 +192,8 @@
 					
 					<ul class="sub-menu">
 						<li>
-							<a href="@{Atividades.listarUsuario}">
-							Listar atividades disponiveis</a>
+							<a href="@{Atividades.listarUsuario(session.get('idUsuario'))}">
+							Listar Atividades Disponíveis</a>
 						</li>
 					</ul>
 				</li>	

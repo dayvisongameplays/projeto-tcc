@@ -55,7 +55,8 @@ public class Atividades extends Controller {
 	}
 
 	public static void listarUsuario() {
-		List<Atividade> atividades = Atividade.findAll();
+		List<Solicitacao> solicitacoes = Solicitacao.findAll();
+		List<Atividade> atividades = Atividade.find("solicitacoes", solicitacoes).fetch();
 		render(atividades);
 	}
 

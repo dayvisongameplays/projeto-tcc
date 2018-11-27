@@ -20,6 +20,7 @@ public class Solicitacoes extends Controller {
 		Solicitacao solicitacao = new Solicitacao();
 		solicitacao.atividade = Atividade.findById(idAtividade);
 		solicitacao.usuario = Usuario.findById(idUsuario);
+		solicitacao.enviado = true;
 		solicitacao.save();
 		flash.success("Solicitação enviada com sucesso!");
 		Atividades.listarUsuario();

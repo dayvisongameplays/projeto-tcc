@@ -26,7 +26,7 @@ public class Usuario extends Model {
 	public List<Frequencia> frequencias;
 	
 	@ManyToMany
-	@JoinTable(name="usuarios-atividades")
+	@JoinTable(name="usuarios_atividades")
 	public List<Atividade> atividades;
 	
 	@OneToMany(mappedBy="usuario")
