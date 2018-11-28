@@ -189,9 +189,14 @@ public class Frequencias extends Controller {
 		render(frequencias);
 	}
 	
+	//Correção de erro 27/11/2018
 	public static void listarFreqUsuario(Long id) {
 		Usuario usuario = Usuario.findById(id);
-		List<Frequencia> frequencias = Frequencia.find("usuario = ?", usuario).fetch();
+		List<Frequencia> frequencias = null;
+		Long idUserAtual = Long.parseLong(session.get("idUsuario"));
+		if (usuario.id == idUserAtual) {
+			frequencias = Frequencia.find("usuario = ?", usuario).fetch();
+		} 
 		render(frequencias);
 	}
 	
