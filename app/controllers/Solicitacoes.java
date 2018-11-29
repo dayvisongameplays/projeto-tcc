@@ -23,7 +23,7 @@ public class Solicitacoes extends Controller {
 		solicitacao.enviado = true;
 		solicitacao.save();
 		flash.success("Solicitação enviada com sucesso!");
-		Atividades.listarUsuario();
+		Atividades.listarAtvDisponiveis();
 	}
 
 	public static void cadastrarUsuariuo(Long id) {

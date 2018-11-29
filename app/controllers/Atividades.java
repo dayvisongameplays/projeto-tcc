@@ -54,7 +54,7 @@ public class Atividades extends Controller {
 		render(atividades);
 	}
 
-	public static void listarUsuario() {
+	public static void listarAtvDisponiveis() {
 		List<Atividade> atividades = Atividade.findAll();
 		render(atividades);
 	}
