@@ -42,10 +42,9 @@ public class Frequencias extends Controller {
 					+ "Provavelmente recadastramento de outras entidades.");
 			formFrequencia();
 		}
-		
+
 		Frequencia f = null;
 
-		//PONTO DE PARTIDA
 		frequencia.data = pegarData();
 		frequencia.hora = pegarHora();
 
@@ -56,22 +55,33 @@ public class Frequencias extends Controller {
 			f = frequencia2.get(cont - 1);
 		}
 
-		if (f == null || f.tipoFreq == null) {
-			frequencia.tipoFreq = TipoFreq.ENTRADA;
-		} else if (f.tipoFreq.equals(TipoFreq.SAIDA)) {
-			frequencia.tipoFreq = TipoFreq.ENTRADA;
-		} else {
-			if (frequencia.data.getDate() != f.data.getDate()) {
+		Date dt1 = frequencia.hora;
+		Date dt2 = frequencia.atividade.hrAbertura;
+		Date dt3 = frequencia.atividade.hrFechamento;
+
+		if (dt1.compareTo(dt3) < 0 && dt1.compareTo(dt2) > 0) {
+			// dt1 < dt3 e dt1 > dt2
+			if (f == null || f.tipoFreq == null) {
+				frequencia.tipoFreq = TipoFreq.ENTRADA;
+			} else if (f.tipoFreq.equals(TipoFreq.SAIDA)) {
 				frequencia.tipoFreq = TipoFreq.ENTRADA;
 			} else {
-				if (f.atividade != frequencia.atividade || f.atividade == null) {
-					flash.error("Você não fechou a atividade anterior!");
-					formFrequencia();
+				if (frequencia.data.getDate() != f.data.getDate()) {
+					frequencia.tipoFreq = TipoFreq.ENTRADA;
+				} else {
+					if (f.atividade != frequencia.atividade || f.atividade == null) {
+						flash.error("Você não fechou a atividade anterior!");
+						formFrequencia();
+					}
+					frequencia.tipoFreq = TipoFreq.SAIDA;
 				}
-				frequencia.tipoFreq = TipoFreq.SAIDA;
 			}
+		} else {
+			flash.error(
+					"Você está tentando registrar uma " + "frequência fora do horário de funcionamento da atividade!");
+			formFrequencia();
 		}
-
+		
 		frequencia.save();
 		flash.success("Frequência cadastrada com sucesso!");
 		listar();
@@ -117,25 +127,26 @@ public class Frequencias extends Controller {
 		}
 		render(f, horasCalc);
 	}
-	
+
 	public static void contarHorasIntervalo(PegarData pegarData, Long id) throws ParseException {
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-		
+
 		String tini = formato.format(pegarData.dataInicio);
 		String tfim = formato.format(pegarData.dataFim);
 		Date dateI = null;
 		Date dateF = null;
-		
+
 		try {
 			dateI = formato.parse(tini);
 			dateF = formato.parse(tfim);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+
 		// Busca no banco frequencias com aquele intervalo de tempo
 		Frequencia f = Frequencia.findById(id);
-		List<Frequencia> frequencias = Frequencia.find("data >= ? and data <= ? and usuario = ?", dateI, dateF, f.usuario).fetch();
+		List<Frequencia> frequencias = Frequencia
+				.find("data >= ? and data <= ? and usuario = ?", dateI, dateF, f.usuario).fetch();
 		int cont = frequencias.size();
 
 		int horasCalc = 0;
@@ -170,10 +181,10 @@ public class Frequencias extends Controller {
 				horasCalc = horasCalc + (int) dur.getStandardHours();
 			}
 		}
-		
+
 		render(f, horasCalc, frequencias);
 	}
-	
+
 	public static void formIntervalo(Long id) {
 		Frequencia usuarioFrequencia = Frequencia.findById(id);
 		render(usuarioFrequencia);
@@ -183,24 +194,24 @@ public class Frequencias extends Controller {
 		Frequencia usuarioFrequencia = Frequencia.findById(id);
 		render(usuarioFrequencia);
 	}
-	
+
 	public static void listar() {
 		List<Frequencia> frequencias = Frequencia.findAll();
 		render(frequencias);
 	}
-	
-	//Correção de erro 27/11/2018
+
+	// Correção de erro 27/11/2018
 	public static void listarFreqUsuario(Long id) {
 		Usuario usuario = Usuario.findById(id);
 		List<Frequencia> frequencias = null;
 		Long idUserAtual = Long.parseLong(session.get("idUsuario"));
 		if (usuario.id == idUserAtual) {
 			frequencias = Frequencia.find("usuario = ?", usuario).fetch();
-		} 
+		}
 		render(frequencias);
 	}
-	
-	//mod dia 13/10/2018
+
+	// mod dia 13/10/2018
 	public static Date pegarData() throws ParseException {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date data = new Date();
@@ -212,27 +223,27 @@ public class Frequencias extends Controller {
 		return data;
 	}
 
-	//mod dia 13/10/2018
+	// mod dia 13/10/2018
 	public static Date pegarHora() throws ParseException {
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 		Date hora = new Date();
-		try {	
+		try {
 			hora = dateFormat.parse(dateFormat.format(hora));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return hora;
 	}
-	
+
 	@SuppressWarnings("deprecation")
-	public static void salvarApp(String idAtividade, String matricula) throws ParseException {		
+	public static void salvarApp(String idAtividade, String matricula) throws ParseException {
 		Frequencia frequencia = new Frequencia();
 		Atividade atividade = Atividade.find("id = ?", Long.parseLong(idAtividade)).first();
 		Usuario usuario = Usuario.find("matricula = ?", matricula).first();
-		
+
 		frequencia.atividade = atividade;
 		frequencia.usuario = usuario;
-		
+
 		if (frequencia.atividade == null || frequencia.usuario == null) {
 			flash.error("Erro ao cadastrar! Existem dependências a serem resolvidas. "
 					+ "Provavelmente recadastramento de outras entidades.");
@@ -250,7 +261,7 @@ public class Frequencias extends Controller {
 		if (cont > 0) {
 			f = frequencia2.get(cont - 1);
 		}
-		
+
 		if (f == null || f.tipoFreq == null) {
 			frequencia.tipoFreq = TipoFreq.ENTRADA;
 		} else if (f.tipoFreq.equals(TipoFreq.SAIDA)) {
@@ -265,7 +276,7 @@ public class Frequencias extends Controller {
 				frequencia.tipoFreq = TipoFreq.SAIDA;
 			}
 		}
-		frequencia.save();	
+		frequencia.save();
 		renderText("true");
 	}
 

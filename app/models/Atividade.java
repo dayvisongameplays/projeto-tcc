@@ -28,6 +28,10 @@ public class Atividade extends Model{
 	
 	public Blob qrCode;
 	
+	@Required
+	@Temporal(TemporalType.TIME)
+	public Date hrAbertura, hrFechamento;
+	
 	@OneToMany(mappedBy="atividade")
 	public List<Frequencia> frequencias;
 	

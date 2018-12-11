@@ -203,7 +203,7 @@
 							Listar atividades</a>
 						</li>
 					</ul>
-				</li>	
+				</li>
 				<li>
 					<a href="javascript:;">
 					<i class="fa fa-paper-plane-o"></i>
@@ -371,7 +371,7 @@
 				$.ajax({
 					url:"@{Atividades.listarJson}",
 					success:function(data){
-						if(data.length > 0){
+						if(data.length >= 0){
 							$("#sub-menu-atividades").html("");
 							for (x in data) {
 								$("#sub-menu-atividades").append('<li><a href="/atividades/detalhes?id=' + data[x].id + '"}>' + data[x].nome + '</a></li>');

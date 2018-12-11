@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import javax.validation.Valid;
+import org.joda.time.LocalTime;
 
 import com.google.zxing.qrcode.encoder.QRCode;
 import com.mysql.fabric.xmlrpc.base.Array;
@@ -17,6 +17,7 @@ import models.Atividade;
 import models.Frequencia;
 import models.Solicitacao;
 import models.Usuario;
+import play.data.validation.Valid;
 import play.db.jpa.Blob;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -32,13 +33,27 @@ public class Atividades extends Controller {
 		render();
 	}
 
-	public static void salvar(@play.data.validation.Valid Atividade atividade) {
-		if (validation.hasErrors()) {
-			validation.keep();
-			params.flash();
-			formAtividade();
+	//Lembrar de recolocar o @valid antes do "Atividade"
+	public static void salvar(Atividade atividade) {
+		
+		
+		SimpleDateFormat formato = new SimpleDateFormat("HH:mm");
+		String hini = params.get("atividade.hrAbertura");
+		String hfim = params.get("atividade.hrFechamento");
+		Date inicio = null;
+		Date fim = null;
+		LocalTime localTime = new LocalTime();
+		System.out.println(localTime.toString());
+		try {
+			inicio = formato.parse(hini);
+			fim = formato.parse(hfim);
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
 
+		atividade.hrAbertura = inicio;
+		atividade.hrFechamento = fim;
+		
 		boolean novaAtividade = atividade.id == null;
 		atividade.save();
 		if (novaAtividade) {
