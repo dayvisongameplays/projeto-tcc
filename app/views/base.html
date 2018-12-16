@@ -43,7 +43,7 @@
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<a href="@{Application.index()}">
-			<img src="@{'public/stylesheets/css1/assets/admin/layout/img/logo.png'}" alt="logo" class="logo-default"/>
+			<img src="@{'public/images/logo-alef.png'}" alt="logo" class="logo-default"/>
 			</a>
 			<div class="menu-toggler sidebar-toggler hide">
 				<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
@@ -135,10 +135,8 @@
 					<!-- END SIDEBAR TOGGLER BUTTON -->
 				</li>
 				<!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
-				<li class="sidebar-search-wrapper">
-					<!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-					<!-- DOC: Apply "sidebar-search-bordered" class the below search form to have bordered search box -->
-					<!-- DOC: Apply "sidebar-search-bordered sidebar-search-solid" class the below search form to have bordered & solid search box -->
+				<!-- <li class="sidebar-search-wrapper">
+			
 					<form class="sidebar-search" action="extra_search.html" method="POST">
 						<a href="javascript:;" class="remove">
 						<i class="icon-close"></i>
@@ -150,8 +148,8 @@
 							</span>
 						</div>
 					</form>
-					<!-- END RESPONSIVE QUICK SEARCH FORM -->
-				</li>
+					
+				</li> -->
 
 				<li class="start ">
 					<a href="@{Application.index}">
@@ -371,7 +369,7 @@
 				$.ajax({
 					url:"@{Atividades.listarJson}",
 					success:function(data){
-						if(data.length >= 0){
+						if(data.length > 0){
 							$("#sub-menu-atividades").html("");
 							for (x in data) {
 								$("#sub-menu-atividades").append('<li><a href="/atividades/detalhes?id=' + data[x].id + '"}>' + data[x].nome + '</a></li>');

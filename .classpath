@@ -74,5 +74,6 @@
 	<classpathentry kind="lib" path="lib/joda-time-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/joda-time-2.1-sources.jar"/>
 	<classpathentry kind="lib" path="lib/joda-time-2.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.8.2.jar"/>
 	<classpathentry kind="output" path="eclipse/classes"/>
 </classpath>
