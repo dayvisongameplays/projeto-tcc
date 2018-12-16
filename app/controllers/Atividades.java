@@ -70,31 +70,22 @@ public class Atividades extends Controller {
 	}
 
 	public static void listarAtvDisponiveis() {
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 		//está pegando o usuário
 		Usuario user = Usuario.findById(Long.parseLong(session.get("idUsuario")));
-		
 		ArrayList<Atividade> atvs = new ArrayList();
-		ArrayList<Atividade> atvs3 = new ArrayList();
-		
 		List<Solicitacao> solicitacoes = Solicitacao.find("usuario = ?", user).fetch();
 		
 		for (Solicitacao solicitacao : solicitacoes) {
-			System.out.println("DENTRO DO FOR");
 			//está pegando a atividade e salvando
 			atvs.add(solicitacao.atividade); 
 		}
 	
-		//PARTE ORIGINAL
 		List<Atividade> atividades = Atividade.findAll();
-		for (Atividade atividade : atividades) {
-			for (Atividade a : atvs) {
-				if (a!=atividade) {
-					atvs3.add(atividade);
-				}
-			}
+		for (Atividade atv : atvs) {
+			atividades.remove(atv);
 		}
-		render(atvs3);
+	
+		render(atividades);
 	}
 
 	public static void listarJson() {
