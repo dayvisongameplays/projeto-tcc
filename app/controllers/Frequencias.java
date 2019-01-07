@@ -201,7 +201,7 @@ public class Frequencias extends Controller {
 	}
 
 	// Correção de erro 27/11/2018
-	public static void listarFreqUsuario(Long id) {
+	public static  void listarFreqUsuario(Long id) {
 		Usuario usuario = Usuario.findById(id);
 		List<Frequencia> frequencias = null;
 		Long idUserAtual = Long.parseLong(session.get("idUsuario"));

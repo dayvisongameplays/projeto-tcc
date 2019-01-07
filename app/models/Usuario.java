@@ -32,4 +32,7 @@ public class Usuario extends Model {
 	@OneToMany(mappedBy="usuario")
 	public List<Solicitacao> solicitacoes;
 	
+	@OneToMany(mappedBy="usuario")
+	public List<Falta> faltas;
+	
 }

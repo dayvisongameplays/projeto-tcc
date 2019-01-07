@@ -41,4 +41,7 @@ public class Atividade extends Model{
 	@OneToMany(mappedBy="atividade")
 	public List<Solicitacao> solicitacoes;
 	
+	@OneToMany(mappedBy="atividade")
+	public List<Falta> faltas;
+	
 }
