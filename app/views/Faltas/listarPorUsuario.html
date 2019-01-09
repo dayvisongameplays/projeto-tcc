@@ -1,7 +1,6 @@
-#{extends 'base2.html' /} 
-#{set title:'Lista de Atividades' /}
-#{set local : 'Justificar Faltas' /}
-#{set tituloPagina: 'Justificar Faltas' /}
+#{extends 'base2.html' /} #{set title:'Lista de Atividades' /} #{set
+local : 'Justificar Faltas' /} #{set tituloPagina: 'Justificar Faltas'
+/}
 
 <!-- Lista de tags para fazer funcionar a codificação -->
 <meta charset="UTF-8">
@@ -38,23 +37,26 @@
 							<th>NOME DA ATIVIDADE</th>
 							<th>USUÁRIO</th>
 							<th>DATA</th>
+							<th>JUSTIFICAR</th>
 						</tr>
 					</thead>
 					<tbody>
-						#{list items:faltas, as: 'falta'}
+						#{list items:faltas, as: 'falta'} 
+						#{if falta.enviado == false}
 						<tr>
 							<td>${falta.atividade.nome}</td>
 							<td>${falta.usuario.nome}</td>
 							<td>${falta.dataEnvio.format('dd-MM-yyyy')}</td>
+							<td><a href="@{Faltas.justificarFaltas(falta.id)}">Justificar
+									falta</a></td>
 						</tr>
+						#{/if} 
 						#{/list}
 					</tbody>
 				</table>
 			</div>
 		</div>
 		<!-- END EXAMPLE TABLE PORTLET-->
-		<a class="btn btn-circle blue" href="@{Atividades.formAtividade}">Cadastrar
-			Atividade</a>
 	</div>
 </div>
 <!-- END PAGE CONTENT-->
